@@ -8,6 +8,14 @@ import os
 from dotenv import load_dotenv
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from fastapi.responses import Response
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -63,6 +71,12 @@ async def log_requests(request: Request, call_next):
         "client_ip": request.client.host
     }
     
+    # Log to stdout (will be captured by Promtail)
+    logger.info(
+        f"Request: {request.method} {request.url.path} - Status: {response.status_code} - "
+        f"Process Time: {process_time:.3f}s - Client IP: {request.client.host}"
+    )
+    
     # Send log to Kafka
     kafka_producer.send('api_logs', value=log_entry)
     
@@ -84,6 +98,7 @@ async def log_requests(request: Request, call_next):
             endpoint=request.url.path,
             status=response.status_code
         ).inc()
+        logger.error(f"Error occurred: {request.method} {request.url.path} - Status: {response.status_code}")
     
     return response
 
