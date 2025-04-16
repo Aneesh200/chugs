@@ -10,6 +10,20 @@ A real-time log analytics platform that collects, processes, and visualizes API 
 - Error tracking and visualization
 - Beautiful Grafana dashboards
 
+## Technology Stack
+
+This project uses the following technologies, each serving a specific purpose:
+
+- **FastAPI**: Modern, fast web framework for building the API with automatic OpenAPI documentation
+- **Kafka**: Distributed streaming platform for handling real-time log data
+- **PostgreSQL**: Relational database for persistent storage of logs and metrics
+- **Grafana**: Visualization platform for creating interactive dashboards
+- **Prometheus**: Metrics collection and monitoring system
+- **Loki**: Log aggregation system designed to be horizontally scalable
+- **cAdvisor**: Container metrics collection for monitoring Docker containers
+- **Node Exporter**: System metrics collection for monitoring host resources
+- **Docker & Docker Compose**: Containerization and orchestration for easy deployment
+
 ## Prerequisites
 
 - Docker and Docker Compose
