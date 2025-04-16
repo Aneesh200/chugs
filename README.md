@@ -100,18 +100,11 @@ python app/log_consumer.py
 ## Monitoring
 
 1. Access Grafana at http://localhost:3000
-2. Add PostgreSQL as a data source:
-   - Host: postgres
-   - Port: 5432
-   - Database: log_analytics
-   - User: postgres
-   - Password: postgres
-
-3. Import the following dashboards:
-   - API Request Overview
-   - Response Time Analysis
-   - Error Monitoring
-   - Real-time Log Stream
+2. The dashboards are automatically provisioned and should be available in the Dashboards section
+3. If you need to manually configure data sources:
+   - Prometheus: http://prometheus:9090
+   - Loki: http://loki:3100
+   - PostgreSQL: Host: postgres, Port: 5432, Database: log_analytics, User: postgres, Password: postgres
 
 ## License
 
