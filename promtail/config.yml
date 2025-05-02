@@ -23,33 +23,14 @@ scrape_configs:
         regex: '/(.*)'
         target_label: 'job'
 
-  - job_name: api
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: api
-          app: api
-          env: development
+  - job_name: container-logs
     pipeline_stages:
-      - json:
-          expressions:
-            timestamp: timestamp
-            method: method
-            path: path
-            status_code: status_code
-            process_time: process_time
-            client_ip: client_ip
-      - timestamp:
-          source: timestamp
-          format: RFC3339
-      - labels:
-          method:
-          path:
-          status_code:
-          client_ip:
-      - output:
-          source: message
+      - docker: {}
+    static_configs:
+    - targets:
+        - localhost
+      labels:
+        job: logs
 
   - job_name: system
     static_configs:
@@ -67,27 +48,5 @@ scrape_configs:
           format: RFC3339
       - labels:
           level:
-      - output:
-          source: message
-
-  - job_name: docker
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: docker
-          app: docker
-          env: development
-    pipeline_stages:
-      - json:
-          expressions:
-            timestamp: timestamp
-            container: container
-            message: message
-      - timestamp:
-          source: timestamp
-          format: RFC3339
-      - labels:
-          container:
       - output:
           source: message 
